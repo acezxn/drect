@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 var mongo = require('mongodb');
 var MongoClient = mongo.MongoClient;
 // var url = "mongodb://localhost:27017/db";
-var user_url = "mongodb+srv://user:Daniel@cluster0.2k6zl.mongodb.net/<dbname>?retryWrites=true&w=majority"
+var user_url = "mongodb+srv://user:Daniel@cluster0.2k6zl.mongodb.net/db?retryWrites=true&w=majority"
 router.use(bodyParser.urlencoded({extended: false}));
 router.use(bodyParser.json());
 MongoClient.connect(user_url, { useNewUrlParser: true, useUnifiedTopology: true }, function(err, db) {
@@ -51,7 +51,7 @@ router.get('/', (req, res, next) => {
 
 router.put('/', (req, res, next) => {
   console.log(req.body);
-  var url = "mongodb+srv://" + req.body.user +":" + req.body.passwd + "@cluster0.2k6zl.mongodb.net/<dbname>?retryWrites=true&w=majority"
+  var url = "mongodb+srv://" + req.body.user +":" + req.body.passwd + "@cluster0.2k6zl.mongodb.net/db?retryWrites=true&w=majority"
   console.log(url);
 
     MongoClient.connect(url, { useNewUrlParser: true, useUnifiedTopology: true }, function(err, db) {
