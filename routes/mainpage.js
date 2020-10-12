@@ -2,12 +2,13 @@ const express = require('express');
 const router = express.Router();
 const bodyParser = require('body-parser');
 var mongo = require('mongodb');
+
 var MongoClient = mongo.MongoClient;
 // var url = "mongodb://localhost:27017/db";
 var user_url = "mongodb+srv://user:Daniel@cluster0.2k6zl.mongodb.net/db?retryWrites=true&w=majority"
 router.use(bodyParser.urlencoded({extended: false}));
 router.use(bodyParser.json());
-MongoClient.connect(process.env.MONGODB_URI || user_url, { useNewUrlParser: true, useUnifiedTopology: true }, function(err, db) {
+MongoClient.connect(user_url, { useNewUrlParser: true, useUnifiedTopology: true }, function(err, db) {
   if (err) throw err;
   var dbo = db.db('db');
   dbo.createCollection("urls", function(err, res) {
@@ -24,7 +25,7 @@ router.get('/', (req, res, next) => {
 });
 router.get('/:attb', (req, res, next) => {
   const id = req.params.attb;
-  MongoClient.connect(process.env.MONGODB_URI || user_url, { useNewUrlParser: true, useUnifiedTopology: true }, function(err, db) {
+  MongoClient.connect(user_url, { useNewUrlParser: true, useUnifiedTopology: true }, function(err, db) {
   // if (err) throw err;
   console.log(db);
   var dbo = db.db("db");
@@ -55,7 +56,7 @@ router.put('/', (req, res, next) => {
   var url = "mongodb+srv://" + req.body.user +":" + req.body.passwd + "@cluster0.2k6zl.mongodb.net/db?retryWrites=true&w=majority"
   console.log(url);
 
-    MongoClient.connect(process.env.MONGODB_URI || url, { useNewUrlParser: true, useUnifiedTopology: true }, function(err, db) {
+    MongoClient.connect(url, { useNewUrlParser: true, useUnifiedTopology: true }, function(err, db) {
     if (err) throw err;
     var dbo = db.db("db");
     var myobj = { name: req.body.name, url: req.body.url };
