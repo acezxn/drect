@@ -45,11 +45,6 @@ router.get('/:attb', (req, res, next) => {
 });
 });
 
-router.get('/', (req, res, next) => {
-  res.status(200).json({
-    message: "welcome to mainpage"
-  });
-});
 
 router.put('/', (req, res, next) => {
   console.log(req.body);
@@ -57,7 +52,11 @@ router.put('/', (req, res, next) => {
   console.log(url);
 
     MongoClient.connect(url, { useNewUrlParser: true, useUnifiedTopology: true }, function(err, db) {
-    if (err) throw err;
+    if (err) {
+      res.status(500).json({
+        error: "Authentication failed"
+      });
+    }
     var dbo = db.db("db");
     var myobj = { name: req.body.name, url: req.body.url };
     dbo.collection("urls").insertOne(myobj, function(err, res) {
