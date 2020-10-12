@@ -7,21 +7,21 @@ var MongoClient = mongo.MongoClient;
 var user_url = "mongodb+srv://user:Daniel@cluster0.2k6zl.mongodb.net/<dbname>?retryWrites=true&w=majority"
 router.use(bodyParser.urlencoded({extended: false}));
 router.use(bodyParser.json());
-// MongoClient.connect(url, { useNewUrlParser: true, useUnifiedTopology: true }, function(err, db) {
-//   if (err) throw err;
-//   var dbo = db.db('db');
-//   dbo.createCollection("urls", function(err, res) {
-//     // if (err) throw err;
-//     console.log("Collection created!");
-//     db.close();
-//   });
-// });
-// router.get('/', (req, res, next) => {
-//   res.status(200).json({
-//     results: 'the mainpage'
-//   });
-//
-// });
+MongoClient.connect(user_url, { useNewUrlParser: true, useUnifiedTopology: true }, function(err, db) {
+  if (err) throw err;
+  var dbo = db.db('db');
+  dbo.createCollection("urls", function(err, res) {
+    // if (err) throw err;
+    console.log("Collection created!");
+    db.close();
+  });
+});
+router.get('/', (req, res, next) => {
+  res.status(200).json({
+    results: 'the mainpage'
+  });
+
+});
 router.get('/:attb', (req, res, next) => {
   const id = req.params.attb;
   MongoClient.connect(user_url, { useNewUrlParser: true, useUnifiedTopology: true }, function(err, db) {
