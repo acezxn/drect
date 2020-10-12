@@ -53,9 +53,12 @@ router.put('/', (req, res, next) => {
 
     MongoClient.connect(url, { useNewUrlParser: true, useUnifiedTopology: true }, function(err, db) {
     if (err) {
-      res.status(500).json({
-        error: "Authentication failed"
+      console.log("error");
+
+      res.status(200).json({
+        error: "Auth failed"
       });
+      return;
     }
     var dbo = db.db("db");
     var myobj = { name: req.body.name, url: req.body.url };
@@ -64,13 +67,14 @@ router.put('/', (req, res, next) => {
       console.log("1 document inserted");
       db.close();
     });
-  });
-
     res.status(200).json({
       message: 'put',
       name: req.body.name,
       url: req.body.url
     });
+  });
+
+
   // } else {
   //   res.status(200).json({
   //     error: 'Authorization failed'
