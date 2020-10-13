@@ -61,7 +61,7 @@ router.put('/', (req, res, next) => {
       return;
     }
     var dbo = db.db("db");
-    dbo.collection("urls").find({"name": id}).toArray( function(err, result) {
+    dbo.collection("urls").find({"name": req.body.name}).toArray( function(err, result) {
       if (result.length == 0) {
         var myobj = { name: req.body.name, url: req.body.url };
         dbo.collection("urls").insertOne(myobj, function(err, res) {
