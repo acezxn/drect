@@ -55,23 +55,32 @@ router.put('/', (req, res, next) => {
     if (err) {
       console.log("error");
 
-      res.status(200).json({
+      res.status(500).json({
         error: "Auth failed"
       });
       return;
     }
     var dbo = db.db("db");
-    var myobj = { name: req.body.name, url: req.body.url };
-    dbo.collection("urls").insertOne(myobj, function(err, res) {
-      if (err) throw err;
-      console.log("1 document inserted");
-      db.close();
+    dbo.collection("urls").find({"name": id}).toArray( function(err, result) {
+      if (result.length == 0) {
+        var myobj = { name: req.body.name, url: req.body.url };
+        dbo.collection("urls").insertOne(myobj, function(err, res) {
+          if (err) throw err;
+          console.log("1 document inserted");
+          db.close();
+        });
+        res.status(200).json({
+          message: 'put',
+          name: req.body.name,
+          url: req.body.url
+        });
+      } else {
+        res.status(500).json({
+          error: "name used"
+        });
+      }
     });
-    res.status(200).json({
-      message: 'put',
-      name: req.body.name,
-      url: req.body.url
-    });
+
   });
 
 
