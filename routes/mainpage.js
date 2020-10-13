@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const bodyParser = require('body-parser');
 var mongo = require('mongodb');
+const fs = require('fs');
 
 var MongoClient = mongo.MongoClient;
 // var url = "mongodb://localhost:27017/db";
@@ -18,10 +19,18 @@ MongoClient.connect(user_url, { useNewUrlParser: true, useUnifiedTopology: true 
   });
 });
 router.get('/', (req, res, next) => {
-  res.status(200).json({
-    results: 'the mainpage'
+  res.writeHead(200, {
+        'Content-Type': 'text/html'
   });
-
+  fs.readFile('./index.html', null, function (error, data) {
+        if (error) {
+            res.writeHead(404);
+            res.write('Whoops! File not found!');
+        } else {
+            res.write(data);
+        }
+        res.end();
+    });
 });
 router.get('/:attb', (req, res, next) => {
   const id = req.params.attb;
