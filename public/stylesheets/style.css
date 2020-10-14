@@ -59,7 +59,7 @@ animation-iteration-count: infinite;
 
 table {
   background-color: rgb(10, 10, 10);
-  text-align: center;
+  float: auto;
 }
 p {
 padding: 10px 10px;
