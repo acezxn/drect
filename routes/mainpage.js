@@ -32,7 +32,7 @@ MongoClient.connect(user_url, { useNewUrlParser: true, useUnifiedTopology: true 
           // res.end();
       });
     dbo.collection("urls").find({}).toArray( function(err, result) {
-      res.write("<table>");
+      res.write('<table style="background-color:#101010">');
       res.write("<tr>");
       res.write("<th>Parameter</th>");
       res.write("<th>URL</th>");
