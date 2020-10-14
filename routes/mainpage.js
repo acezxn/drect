@@ -15,23 +15,44 @@ MongoClient.connect(user_url, { useNewUrlParser: true, useUnifiedTopology: true 
   dbo.createCollection("urls", function(err, res) {
     // if (err) throw err;
     console.log("Collection created!");
-    db.close();
+
+    // db.close();
   });
-});
-router.get('/', (req, res, next) => {
-  res.writeHead(200, {
-        'Content-Type': 'text/html'
-  });
-  fs.readFile('./index.html', null, function (error, data) {
-        if (error) {
-            res.writeHead(404);
-            res.write('Whoops! File not found!');
-        } else {
-            res.write(data);
-        }
-        res.end();
+  router.get('/', (req, res, next) => {
+    res.writeHead(200, {
+          'Content-Type': 'text/html'
     });
+    fs.readFile('./index.html', null, function (error, data) {
+          if (error) {
+              res.writeHead(404);
+              res.write('Whoops! File not found!');
+          } else {
+              res.write(data);
+          }
+          // res.end();
+      });
+    dbo.collection("urls").find({}).toArray( function(err, result) {
+      res.write("<table>");
+      res.write("<tr>");
+      res.write("<th>Parameter</th>");
+      res.write("<th>URL</th>");
+      res.write("</tr>");
+
+      for (var i = 0; i < result.length;i++) {
+        console.log(result[i]);
+        res.write("<tr>");
+        res.write("<td>" + result[i].name + "</td>");
+        res.write("<td>" + result[i].url + "</td>");
+        res.write("</tr>");
+      }
+      res.write("</table>");
+      res.write("</body></html>");
+      res.end();
+    });
+
+  });
 });
+
 router.get('/:attb', (req, res, next) => {
   const id = req.params.attb;
   MongoClient.connect(user_url, { useNewUrlParser: true, useUnifiedTopology: true }, function(err, db) {
