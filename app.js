@@ -1,12 +1,18 @@
 const express = require('express');
 const app = express();
+var path = require('path');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const mainpage = require('./routes/mainpage');
+var indexRouter = require('./routes/index');
+
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
 
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
+app.use(express.static(path.join(__dirname, 'public')));
 
 
 app.use((req, res, next) => {

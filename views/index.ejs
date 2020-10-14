@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta charset="UTF-8">
+  <title>drect</title>
+  <link rel="stylesheet" href="./stylesheets/style.css">
+
+</head>
+
+<body>
+    <h1 class="menuitem">URL redirector</h1>
+    <div id="div1"></div>
+    <div id="div2"></div>
+    <div id="div3"></div>
+    <div id="div4"></div>
+    <div id="div5"></div>
+    <div id="div6"></div>
+    <p style="background-color:#101010">
+      This is a url redirector
+    </p>
+    <h2>Parameters:</h2>
+    <ul>
+      <ul>
+        <%
+          var list = '';
+          var p = '';
+          var u = '';
+          for (i = 0; i < Parameters.length; i++) {
+            p = '<td><a>' + Parameters[i].name + '</a></td>';
+            u = '<td><a>' + Parameters[i].url + '</a></td>';
+            list += '<tr>' + p + u + '</tr>';
+          }
+        %>
+        <!-- <%- list %> -->
+        <table>
+          <tr>
+            <th>Param</th>
+            <th>URL</th>
+            <%- list %>
+          </tr>
+
+        </table>
+    </ul>
+</body>
+
+</html>

@@ -4,8 +4,9 @@ const bodyParser = require('body-parser');
 var mongo = require('mongodb');
 const fs = require('fs');
 
+
 var MongoClient = mongo.MongoClient;
-// var url = "mongodb://localhost:27017/db";
+// var user_url = "mongodb://localhost:27017/db";
 var user_url = "mongodb+srv://user:Daniel@cluster0.2k6zl.mongodb.net/db?retryWrites=true&w=majority"
 router.use(bodyParser.urlencoded({extended: false}));
 router.use(bodyParser.json());
@@ -19,35 +20,38 @@ MongoClient.connect(user_url, { useNewUrlParser: true, useUnifiedTopology: true 
     // db.close();
   });
   router.get('/', (req, res, next) => {
-    res.writeHead(200, {
-          'Content-Type': 'text/html'
-    });
-    fs.readFile('./index.html', null, function (error, data) {
-          if (error) {
-              res.writeHead(404);
-              res.write('Whoops! File not found!');
-          } else {
-              res.write(data);
-          }
-          // res.end();
-      });
+    // res.writeHead(200, {
+    //       'Content-Type': 'text/html'
+    // });
+    // fs.readFile('./index.html', null, function (error, data) {
+    //       if (error) {
+    //           res.writeHead(404);
+    //           res.write('Whoops! File not found!');
+    //       } else {
+    //           res.write(data);
+    //       }
+    //       // res.end();
+    //   });
     dbo.collection("urls").find({}).toArray( function(err, result) {
-      res.write('<table style="background-color:#101010" class="menuitem">');
-      res.write('<tr>');
-      res.write("<th>Parameter</th>");
-      res.write("<th>URL</th>");
-      res.write("</tr>");
-
-      for (var i = 0; i < result.length;i++) {
-        console.log(result[i]);
-        res.write("<tr>");
-        res.write("<td>" + result[i].name + "</td>");
-        res.write("<td>" + result[i].url + "</td>");
-        res.write("</tr>");
-      }
-      res.write("</table>");
-      res.write("</body></html>");
-      res.end();
+      res.render('index', {
+            "Parameters" : result
+        });
+      // res.write('<table style="background-color:#101010" class="menuitem">');
+      // res.write('<tr>');
+      // res.write("<th>Parameter</th>");
+      // res.write("<th>URL</th>");
+      // res.write("</tr>");
+      //
+      // for (var i = 0; i < result.length;i++) {
+      //   console.log(result[i]);
+      //   res.write("<tr>");
+      //   res.write("<td>" + result[i].name + "</td>");
+      //   res.write("<td>" + result[i].url + "</td>");
+      //   res.write("</tr>");
+      // }
+      // res.write("</table>");
+      // res.write("</body></html>");
+      // res.end();
     });
 
   });
