@@ -17,22 +17,21 @@ MongoClient.connect(user_url, { useNewUrlParser: true, useUnifiedTopology: true 
     // if (err) throw err;
     console.log("Collection created!");
 
-    db.close();
+    // db.close();
   });
 });
 
 router.get('/', (req, res, next) => {
-  MongoClient.connect(user_url, { useNewUrlParser: true, useUnifiedTopology: true }, function(err, db) {
-    var dbo = db.db('db');
-    dbo.collection("urls").find({}).toArray( function(err, result) {
-      res.render('index', {
-            "Parameters" : result
-        });
-
-    });
-    db.close();
+MongoClient.connect(user_url, { useNewUrlParser: true, useUnifiedTopology: true }, function(err, db) {
+  var dbo = db.db('db');
+  dbo.collection("urls").find({}).toArray( function(err, result) {
+    res.render('index', {
+          "Parameters" : result
+      });
+  //
   });
 
+});
 });
 
 router.get('/:attb', (req, res, next) => {
