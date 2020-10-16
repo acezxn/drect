@@ -1,5 +1,7 @@
 body {background-color: rgb(0,0,0);}
-    h1 {color: red;}
+    h1 {color: red;
+      font-family: "Lucida Console", Courier, monospace;
+    }
     h2 {color: cyan;}
     h3 {color: rgb(255, 0 ,255);}
     h4 {color: white}

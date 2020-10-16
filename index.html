@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta charset="UTF-8">
   <title>drect</title>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="./stylesheet/style.css">
 
 </head>
 
@@ -21,16 +21,7 @@
       This is a url redirector
     </p>
     <h2>Parameters:</h2>
-    <ul>
-      <ul>
-      <%
-        var list = '';
-        for (i = 0; i < Parameters.length; i++) {
-          list += '<li><a>' + Parameters[i].name + Parameters[i].url + '</a></li>';
-        }
-      %>
-      <%- list %>
-    </ul>
+
 </body>
 
 </html>
