@@ -42,9 +42,7 @@ router.get('/:attb', (req, res, next) => {
   var dbo = db.db("db");
   dbo.collection("urls").find({"name": id}).toArray( function(err, result) {
     if (result.length == 0) {
-      res.status(200).json({
-        error: "not found"
-      });
+      res.render('error', {message: 'not found'});
     } else {
       res.redirect(301, result[0].url)
     }
